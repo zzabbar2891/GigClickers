@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GigClickers - Ultimate All-in-One Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        html, body { height: 100%; }
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; }
+        .main-container { flex: 1; padding-top: 20px; }
+        .navbar { background-color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,.1); }
+        .navbar-brand { font-weight: bold; color: #28a745 !important; }
+        .card, .job-card { background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .job-card { padding: 20px; transition: transform .2s, box-shadow .2s; }
+        .job-card:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        .job-card-header { display: flex; align-items: center; width: 100%; }
+        .job-icon { font-size: 2rem; margin-right: 20px; width: 50px; text-align: center; }
+        .job-details { flex-grow: 1; }
+        .job-title { font-weight: 600; color: #333; margin-bottom: 5px; }
+        .job-payment { font-size: 1.2rem; font-weight: bold; color: #28a745; }
+        .balance-card { background: linear-gradient(45deg, #28a745, #20c997); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .modal-header, .modal-footer { border: none; }
+        .form-control:focus { box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); border-color: #86b7fe; }
+        .sidebar-nav .nav-link { color: #333; padding: 12px 15px; display: flex; align-items: center; border-radius: 8px; font-weight: 500; cursor: pointer; }
+        .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active { background-color: #e9ecef; color: #0d6efd; }
+        .sidebar-nav .nav-link i.fa-fw { width: 25px; text-align: center; font-size: 1.1rem; }
+        .offcanvas-header { border-bottom: 1px solid #dee2e6; }
+        .offcanvas-title { font-weight: bold; color: #28a745; }
+        #categoryGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+        .category-tag { background-color: #f1f1f1; border: 1px solid #ddd; border-radius: 20px; padding: 8px 12px; text-align: center; cursor: pointer; font-size: 0.9rem; }
+        .category-tag.active { background-color: #28a745; color: white; border-color: #28a745; }
+        .form-control-selector { cursor: pointer; background-color: #fff !important; }
+        
+        #spin-container { text-align: center; padding: 30px; }
+        #spin-wheel-wrapper { position: relative; width: 280px; height: 280px; margin: 20px auto; }
+        #spin-wheel { position: relative; width: 100%; height: 100%; border-radius: 50%; border: 5px solid #333; background-image: conic-gradient(red 0% 45%, gold 45% 90%, deepskyblue 90% 135%, limegreen 135% 180%, orange 180% 225%, darkviolet 225% 270%, cyan 270% 315%, hotpink 315% 360%); transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1); }
+        .spin-section { position: absolute; width: 50%; height: 50%; background: transparent; transform-origin: 100% 100%; left: 0; top: 0; display: flex; justify-content: center; align-items: flex-start; padding-top: 15px; }
+        .spin-section span { color: white; font-weight: bold; text-shadow: 1px 1px 2px black; font-size: 0.9rem; transform: rotate(-45deg); display: block; }
+        #spin-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 30px solid #333; z-index: 10; }
+        #spin-btn { margin-top: 30px; font-size: 1.5rem; padding: 10px 40px; }
+
+        .site-footer { background-color: #e0f2e9; color: #333; padding: 40px 0; }
+        .footer-logo { font-size: 1.8rem; font-weight: bold; color: #28a745; margin-bottom: 20px; }
+        .footer-heading { font-weight: bold; margin-bottom: 15px; }
+        .footer-links { list-style: none; padding-left: 0; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: #555; text-decoration: none; }
+        .footer-links a:hover { color: #28a745; }
+        .social-icons a { display: inline-flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 8px; color: white; margin-right: 10px; text-decoration: none; font-size: 1.2rem; }
+        .social-icons .facebook { background-color: #1877f2; }
+        .social-icons .twitter { background-color: #1da1f2; }
+        .social-icons .linkedin { background-color: #0077b5; }
+        .footer-copyright { border-top: 1px solid #cce2d6; margin-top: 30px; padding-top: 20px; text-align: center; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav class="navbar navbar-expand-lg"><div class="container"><button class="btn border-0 me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainMenuOffcanvas"><i class="fas fa-bars fa-lg"></i></button><a class="navbar-brand" href="#">GigClickers</a><div class="d-flex align-items-center ms-auto"><span id="userBalance" class="fw-bold me-3">ব্যালেন্স: $0.000</span><i class="fas fa-user-circle fa-2x"></i></div></div></nav>
+    </header>
+
+    <!-- SIDEBAR -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mainMenuOffcanvas">
+      <div class="offcanvas-header"><h5 class="offcanvas-title">Skillworldhub</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div>
+      <div class="offcanvas-body p-2">
+        <ul class="list-unstyled sidebar-nav">
+          <li class="nav-item"><a class="nav-link active" data-view="job-view"><i class="fas fa-search fa-fw me-3"></i> Find Job</a></li>
+          <li class="nav-item"><a class="nav-link" data-view="smm-view"><i class="fas fa-server fa-fw me-3"></i> SMM Service</a></li>
+          <li class="nav-item"><a class="nav-link" data-view="refer-earn-view"><i class="fas fa-user-friends fa-fw me-3"></i> Refer & Earn</a></li>
+          <li class="nav-item"><a class="nav-link" data-view="balance-transfer-view"><i class="fas fa-exchange-alt fa-fw me-3"></i> Balance Transfer</a></li>
+          <li class="nav-item"><a class="nav-link" data-view="spin-earn-view"><i class="fas fa-trophy fa-fw me-3"></i> Play Spin Earn</a></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="collapse" href="#adSubmenu"><i class="fas fa-ad fa-fw me-3"></i> Advertisement <i class="fas fa-chevron-down ms-auto"></i></a><div class="collapse" id="adSubmenu"><ul class="list-unstyled ps-2 pe-2 pt-2"><li><a class="nav-link" data-view="advertisement-view">Create Ad</a></li><li><a class="nav-link" href="#">My Ads</a></li></ul></div></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="collapse" href="#depositSubmenu"><i class="fas fa-credit-card fa-fw me-3"></i> Deposit <i class="fas fa-chevron-down ms-auto"></i></a><div class="collapse" id="depositSubmenu"><ul class="list-unstyled ps-2 pe-2 pt-2"><li><a class="nav-link" data-bs-toggle="modal" data-bs-target="#depositModal">Deposit Now</a></li><li><a class="nav-link" href="#">Deposit History</a></li></ul></div></li>
+          <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#withdrawModal"><i class="fas fa-download fa-fw me-3"></i> Withdraw</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-life-ring fa-fw me-3"></i> Support Ticket</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="container main-container">
+        <!-- View 1: Find Job (Default) -->
+        <div id="job-view" class="main-view"><div class="row"><div class="col-lg-8"><div class="balance-card text-center"><h4>আপনার আয়</h4><h1 id="earnedBalanceDisplay">$0.000</h1><div class="mt-3"><button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#depositModal">ডিপোজিট করুন</button><button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#withdrawModal">টাকা তুলুন</button></div></div><div class="filter-section d-flex justify-content-between align-items-center"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal"><i class="fas fa-filter me-2"></i> Select Category</button><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#postJobModal"><i class="fas fa-plus-circle me-1"></i> জব পোস্ট করুন</button></div><div id="jobListings"></div></div><div class="col-lg-4"><div class="p-4 rounded bg-white shadow-sm"><h5>কিভাবে কাজ করে?</h5><hr><ul class="list-unstyled"><li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>ক্যাটাগরি থেকে জব খুঁজুন।</li><li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>নির্দেশনা দেখুন।</li><li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>প্রমাণ জমা দিন।</li><li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>পেমেন্ট গ্রহণ করুন।</li></ul></div></div></div></div>
+        
+        <!-- View 2: SMM Service -->
+        <div id="smm-view" class="main-view d-none"><div id="smm-history-wrapper"><div class="card shadow-sm"><div class="card-body"><div class="d-flex justify-content-between align-items-center mb-3"><h5 class="card-title mb-0">Service History</h5><button class="btn btn-success" id="order-new-service-btn">Order New Service</button></div><div class="table-responsive"><table class="table table-striped table-hover"><thead><tr><th>ID</th><th>Date Time</th><th>Link</th><th>Charge</th><th>Quantity</th><th>Service</th></tr></thead><tbody><tr><td colspan="6" class="text-center">No service history found.</td></tr></tbody></table></div></div></div></div><div id="smm-order-form-wrapper" class="d-none"><div class="card shadow-sm"><div class="card-body p-4"><h5 class="card-title text-center mb-4">Add new Boost</h5><form id="smm-order-form"><div class="mb-3"><label class="form-label">Category <span class="text-danger">*</span></label><input type="text" class="form-control form-control-selector" id="smm-category-input" placeholder="Select One" readonly data-bs-toggle="modal" data-bs-target="#smmCategoryModal" required></div><div class="mb-3"><label class="form-label">Service <span class="text-danger">*</span></label><input type="text" class="form-control form-control-selector" id="smm-service-input" placeholder="Select One" readonly data-bs-toggle="modal" data-bs-target="#smmServiceModal" required></div><div class="mb-3"><label class="form-label">Description <span class="text-danger">*</span></label><textarea class="form-control" rows="3" placeholder="Description" required></textarea></div><div class="mb-3"><label class="form-label">Link <span class="text-danger">*</span></label><input type="url" class="form-control" placeholder="Link" required></div><div class="mb-3"><label class="form-label">Quantity <span class="text-danger">*</span></label><input type="number" class="form-control" id="smm-quantity-input" placeholder="100" min="1" required></div><div class="mb-3"><label class="form-label">Charge <span class="text-danger">*</span></label><div class="input-group"><span class="input-group-text">$</span><input type="text" class="form-control" id="smm-charge-input" value="0" readonly></div></div><button type="submit" class="btn btn-primary w-100">Submit</button></form></div></div></div></div>
+        
+        <!-- View 3: Balance Transfer -->
+        <div id="balance-transfer-view" class="main-view d-none"><div class="card shadow-sm"><div class="card-body p-4"><h5 class="card-title text-center mb-4">Balance Transfer</h5><form id="balance-transfer-form"><div class="mb-3"><label for="transfer-username" class="form-label">Username</label><input type="text" id="transfer-username" class="form-control" placeholder="Enter recipient's username" required></div><div class="mb-3"><label for="transfer-amount" class="form-label">Amount ($)</label><input type="number" id="transfer-amount" class="form-control" placeholder="0.00" step="0.01" min="0.1" required></div><button type="submit" class="btn btn-primary w-100">Transfer</button></form></div></div></div>
+        
+        <!-- View 4: Spin & Earn -->
+        <div id="spin-earn-view" class="main-view d-none"><div class="card shadow-sm"><div class="card-body d-flex flex-column align-items-center" id="spin-container"><h4>Play & Win</h4><div id="spin-wheel-wrapper"><div id="spin-pointer"></div><div id="spin-wheel"></div></div><button class="btn btn-success" id="spin-btn">SPIN</button></div></div></div>
+        
+        <!-- View 5: Advertisement -->
+        <div id="advertisement-view" class="main-view d-none"><div class="card shadow-sm"><div class="card-body p-4"><h5 class="card-title text-center mb-4">Create Advertisement</h5><form id="create-ad-form"><div class="mb-3"><label class="form-label">Ad Title</label><input type="text" class="form-control" required></div><div class="mb-3"><label class="form-label">Ad Content/Description</label><textarea class="form-control" rows="3" required></textarea></div><div class="mb-3"><label class="form-label">Target URL</label><input type="url" class="form-control" placeholder="https://..." required></div><div class="mb-3"><label class="form-label">Budget ($)</label><input type="number" class="form-control" min="1" required></div><button type="submit" class="btn btn-primary w-100">Submit Ad</button></form></div></div></div>
+
+        <!-- View 6: Refer & Earn -->
+        <div id="refer-earn-view" class="main-view d-none">
+            <h4 class="mb-4">Refer & Earn</h4>
+            <div class="card"><div class="card-body bg-success-subtle text-success-emphasis rounded">At GigClickers you get instant 0.20 bonus on deposit balance by activating account.<br>You will get 5% deposit bonus and 3% task bonus on every successful refer.</div></div>
+            <div class="card"><div class="card-body"><h5>Referral join friend</h5><p class="fs-4 fw-bold mb-0">0</p></div></div>
+            <div class="card"><div class="card-body"><h5>Share through social media</h5><div class="input-group mt-2"><input type="text" id="referral-link" class="form-control" value="https://gigclickers.com?r=765371" readonly><button class="btn btn-outline-secondary" id="copy-referral-link"><i class="fas fa-copy"></i></button></div><div class="mt-3"><a href="#" class="btn btn-light border me-2"><i class="fab fa-facebook-f"></i></a><a href="#" class="btn btn-light border me-2"><i class="fab fa-twitter"></i></a><a href="#" class="btn btn-light border"><i class="fab fa-linkedin-in"></i></a></div></div></div>
+        </div>
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="site-footer mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0"><div class="footer-logo">GigClickers</div><p>The leading marketplace for micro jobs and SMM services. Connect with freelancers and clients from around the world.</p></div>
+                <div class="col-lg-2 col-md-4 col-6"><h5 class="footer-heading">About GigClickers</h5><ul class="footer-links"><li><a href="#">About Us</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li></ul></div>
+                <div class="col-lg-3 col-md-4 col-6"><h5 class="footer-heading">Agreement</h5><ul class="footer-links"><li><a href="#">Microjob Marketplace</a></li><li><a href="#">Deal Marketplace</a></li></ul></div>
+                <div class="col-lg-3 col-md-4"><h5 class="footer-heading">Social Media</h5><div class="social-icons"><a href="#" class="telegram"><i class="fab fa-telegram-plane"></i></a><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a><a href="#" class="email"><i class="fas fa-envelope"></i></a></div></div>
+            </div>
+            <div class="footer-copyright">© 2025 gigclickers.com. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <!-- ALL MODALS -->
+    <div class="modal fade" id="categoryModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Select Job Category</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div id="categoryGrid"></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" id="clearCategories">Clear</button><button type="button" class="btn btn-primary" id="applyCategories">Apply</button></div></div></div></div>
+    <div class="modal fade" id="applyJobModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5>কাজের প্রমাণ জমা দিন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><h6 id="jobToApplyTitle" class="mb-3"></h6><p>অনুগ্রহ করে কাজের প্রমাণ হিসেবে স্ক্রিনশট লিংক দিন।</p><form id="proofSubmissionForm"><div class="mb-3"><label class="form-label">স্ক্রিনশট লিংক ১ (আবশ্যক)</label><input type="url" class="form-control" id="proofLink1" required></div><div class="mb-3"><label class="form-label">স্ক্রিনশট লিংক ২ (ঐচ্ছিক)</label><input type="url" class="form-control" id="proofLink2"></div><div class="mb-3"><label class="form-label">স্ক্রিনশট লিংক ৩ (ঐচ্ছিক)</label><input type="url" class="form-control" id="proofLink3"></div><input type="hidden" id="jobPriceToEarn"><button type="submit" class="btn btn-success w-100">Submit</button></form></div></div></div></div>
+    <div class="modal fade" id="postJobModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">নতুন জব পোস্ট করুন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="jobPostForm"><div class="mb-3"><label class="form-label">জবের টাইটেল</label><input type="text" class="form-control" id="jobTitleInput" required></div><div class="mb-3"><label class="form-label">কাজের বিস্তারিত বিবরণ</label><textarea class="form-control" id="jobDescriptionInput" rows="4" required></textarea></div><div class="mb-3"><label class="form-label">প্রতি কাজের জন্য পেমেন্ট (USD)</label><input type="number" class="form-control" id="jobPaymentInput" step="0.001" required></div><div class="mb-3"><label class="form-label">কতজন কাজ করতে পারবে?</label><input type="number" class="form-control" id="jobQuantityInput" required></div><button type="submit" class="btn btn-primary w-100">জব পোস্ট করুন</button></form></div></div></div></div>
+    <div class="modal fade" id="depositModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">ডিপোজিট করুন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p><strong>বিকাশ/নগদ/রকেট নম্বর:</strong> 01234567890</p><hr><form><div class="mb-3"><label class="form-label">টাকার পরিমাণ (BDT)</label><input type="number" class="form-control" id="depositAmount" required></div><div class="mb-3"><label class="form-label">ট্রানজেকশন আইডি</label><input type="text" class="form-control" id="transactionId" required></div><button type="button" class="btn btn-primary w-100" onclick="alert('আপনার ডিপোজিট রিকুয়েস্ট পাঠানো হয়েছে।')">সাবমিট</button></form></div></div></div></div>
+    <div class="modal fade" id="withdrawModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">টাকা উত্তোলন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p>আপনার বর্তমান ব্যালেন্স: <strong id="withdrawBalanceDisplay">$0.000</strong></p><p class="text-muted"><small>সর্বনিম্ন $1 উত্তোলন করা যাবে।</small></p><form id="withdrawForm"><div class="mb-3"><label class="form-label">পেমেন্ট মেথড</label><div><input type="radio" class="btn-check" name="paymentMethod" id="bkash" autocomplete="off" checked><label class="btn btn-outline-danger" for="bkash">বিকাশ</label><input type="radio" class="btn-check" name="paymentMethod" id="rocket" autocomplete="off"><label class="btn btn-outline-warning" for="rocket">রকেট</label><input type="radio" class="btn-check" name="paymentMethod" id="nagad" autocomplete="off"><label class="btn btn-outline-primary" for="nagad">নগদ</label></div></div><div class="mb-3"><label class="form-label">টাকার পরিমাণ (USD)</label><input type="number" class="form-control" id="withdrawAmount" step="0.01" min="1" required></div><div class="mb-3"><label class="form-label">একাউন্ট নম্বর</label><input type="text" class="form-control" id="accountNumber" required></div><button type="submit" class="btn btn-primary w-100">উইথড্র রিকুয়েস্ট</button></form></div></div></div></div>
+    <div class="modal fade" id="smmCategoryModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Select Category</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body" id="smm-category-list"></div></div></div></div>
+    <div class="modal fade" id="smmServiceModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Select Service</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body" id="smm-service-list"></div></div></div></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- STATE & CONSTANTS ---
+            let currentBalance = 0.0, jobCounter = 0;
+            const modals = {};
+            ['applyJobModal', 'postJobModal', 'categoryModal', 'smmCategoryModal', 'smmServiceModal', 'depositModal', 'withdrawModal'].forEach(id => { const el = document.getElementById(id); if (el) modals[id] = new bootstrap.Modal(el); });
+            const offcanvasInstance = new bootstrap.Offcanvas(document.getElementById('mainMenuOffcanvas'));
+            const sampleJobs = [ { icon: 'fab fa-youtube text-danger', title: 'ইউটিউব ভিডিও দেখা', price: 0.024, desc: 'সম্পূর্ণ ভিডিও দেখুন...', category: 'YouTube' }, { icon: 'fab fa-facebook text-primary', title: 'ফেসবুক পেজে ফলো', price: 0.020, desc: 'পেজটিতে ফলো দিন...', category: 'Facebook' }, { icon: 'fab fa-telegram text-info', title: 'টেলিগ্রাম চ্যানেলে জয়েন', price: 0.015, desc: 'চ্যানেলে যুক্ত হন।', category: 'Telegram' }, { icon: 'fas fa-download text-success', title: 'অ্যাপ ডাউনলোড', price: 0.050, desc: 'অ্যাপটি ডাউনলোড করুন।', category: 'Mobile Application' }, { icon: 'fas fa-user-plus text-warning', title: 'ওয়েবসাইটে সাইন-আপ', price: 0.040, desc: 'নতুন একাউন্ট তৈরি করুন।', category: 'Sign Up' }, { icon: 'fas fa-star text-warning', title: 'অ্যাপে ৫ স্টার রিভিউ', price: 0.035, desc: 'একটি ৫ স্টার রিভিউ দিন।', category: 'Review' }, { icon: 'fas fa-pen-nib text-primary', title: 'একটি ব্লগ কমেন্ট লিখুন', price: 0.025, desc: 'সম্পর্কিত একটি কমেন্ট লিখুন।', category: 'Comment' }, { icon: 'fas fa-user-check text-info', title: 'ইউটিউব চ্যানেল সাবস্ক্রাইব', price: 0.019, desc: 'চ্যানেলটি সাবস্ক্রাইব করুন।', category: 'YouTube' }, { icon: 'fas fa-ad text-dark', title: 'অ্যাডে ক্লিক করুন', price: 0.010, desc: 'বিজ্ঞাপনটিতে ক্লিক করুন।', category: 'Ads Click' }, { icon: 'fab fa-tiktok text-dark', title: 'টিকটক ভিডিও দেখুন', price: 0.015, desc: 'টিকটক ভিডিওটি দেখুন।', category: 'Tik-tok' }, { icon: 'fas fa-poll text-success', title: 'ছোট একটি সার্ভে পূরণ করুন', price: 0.100, desc: '৫ মিনিটের এই সার্ভেটি সততার সাথে পূরণ করুন।', category: 'Survey' }, { icon: 'fas fa-share-alt text-info', title: 'পোস্ট শেয়ার করুন', price: 0.022, desc: 'আপনার ফেসবুক প্রোফাইলে পোস্টটি পাবলিকভাবে শেয়ার করুন।', category: 'Share' }, ];
+            const allCategories = [ "YouTube", "Facebook", "Telegram", "Instagram", "Twitter", "Tik-tok", "Mobile Application", "Sign Up", "Comment", "Review", "Survey", "Share", "Ads Click", "Write an Article", "Promotion", "Refer Program", "Kyc Submit", "Website", "Blog", "Discord", "Reddit", "LinkedIn", "Gmail Account", "Others" ];
+            const smmServices = [ "Youtube Monetize Channel Service", "YouTube Channel Views Service", "YouTube video watch time Service", "Youtube Channel Subscriber Service", "Youtube Video Shares Service", "Youtube Video Comments Service", "Youtube Video Likes Service", "Facebook Like" ];
+            const spinPrizes = [{value: 0.050, label: '$0.05'}, {value: 0, label: 'Lose'}, {value: 0.010, label: '$0.01'}, {value: 0.001, label: '$0.001'}, {value: 0.100, label: '$0.1'}, {value: 0, label: 'Lose'}, {value: 0.020, label: '$0.02'}, {value: 0.005, label: '$0.005'}];
+            
+            // --- CORE FUNCTIONS ---
+            const updateBalanceDisplay = () => { const f = `$${currentBalance.toFixed(3)}`; document.getElementById('userBalance').innerText = `ব্যালেন্স: ${f}`; const earnedEl = document.getElementById('earnedBalanceDisplay'); if(earnedEl) earnedEl.innerText = f; const withdrawEl = document.getElementById('withdrawBalanceDisplay'); if(withdrawEl) withdrawEl.innerText = f; };
+            const switchView = (viewId) => { document.querySelectorAll('.main-view').forEach(v => v.classList.add('d-none')); document.getElementById(viewId).classList.remove('d-none'); document.querySelectorAll('.sidebar-nav .nav-link').forEach(l => l.classList.remove('active')); const activeLink = document.querySelector(`.sidebar-nav .nav-link[data-view="${viewId}"]`); if(activeLink) activeLink.classList.add('active'); };
+            const populateSmmModal = (modalBodyId, items, inputTargetId, modal) => { const c = document.getElementById(modalBodyId); if(!c || !modal) return; c.innerHTML = `<div class="list-group">${items.map(i => `<label class="list-group-item list-group-item-action" style="cursor: pointer;"><input class="form-check-input me-2" type="radio" name="${modalBodyId}-radio"> ${i}</label>`).join('')}</div>`; c.querySelectorAll('label').forEach(l => l.addEventListener('click', () => { document.getElementById(inputTargetId).value = l.innerText.trim(); modal.hide(); })); };
+            const createJobCard = (job) => { jobCounter++; return `<div class="job-card" data-category="${job.category}"><div class="job-card-header"><div class="job-icon ${job.icon.split(' ')[2]}"><i class="${job.icon.split(' ')[0]} ${job.icon.split(' ')[1]}"></i></div><div class="job-details"><h5 class="job-title">${job.title}</h5></div><div class="text-end ms-3"><div class="job-payment">$${job.price.toFixed(3)}</div><div class="mt-2"><button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#job-desc-${jobCounter}">বিবরণ</button><button class="btn btn-sm btn-apply" onclick="window.applyForJob('${job.title}', ${job.price})">Apply</button></div></div></div><div class="collapse" id="job-desc-${jobCounter}"><div class="p-3 mt-3 bg-light rounded"><strong>বিবরণ:</strong><p class="mb-0 mt-2">${job.desc}</p></div></div></div>`; };
+            const displayJobs = (jobs) => { const c = document.getElementById('jobListings'); if(c) c.innerHTML = jobs.length ? jobs.map(createJobCard).join('') : `<div class="alert alert-warning text-center">No jobs found.</div>`; };
+            window.applyForJob = (title, price) => { modals.applyJobModal.show(); document.getElementById('jobToApplyTitle').innerText = title; document.getElementById('jobPriceToEarn').value = price; };
+
+            // --- EVENT LISTENERS SETUP ---
+            document.querySelector('.sidebar-nav').addEventListener('click', (e) => { const link = e.target.closest('.nav-link[data-view]'); if (link) { e.preventDefault(); switchView(link.dataset.view); if(offcanvasInstance) offcanvasInstance.hide(); } });
+            const catGrid = document.getElementById('categoryGrid'); if(catGrid) { catGrid.innerHTML = allCategories.map(c => `<div class="category-tag" data-category="${c}">${c}</div>`).join(''); catGrid.addEventListener('click', e => e.target.classList.contains('category-tag') && e.target.classList.toggle('active')); }
+            document.getElementById('clearCategories')?.addEventListener('click', () => document.querySelectorAll('.category-tag.active').forEach(t => t.classList.remove('active')));
+            document.getElementById('applyCategories')?.addEventListener('click', () => { const s = [...document.querySelectorAll('.category-tag.active')].map(t => t.dataset.category); displayJobs(s.length ? sampleJobs.filter(j => s.includes(j.category)) : sampleJobs); modals.categoryModal.hide(); });
+            document.getElementById('proofSubmissionForm')?.addEventListener('submit', function(e) { e.preventDefault(); if (document.getElementById('proofLink1').value) { const a = parseFloat(document.getElementById('jobPriceToEarn').value); this.reset(); modals.applyJobModal.hide(); alert('আপনার কাজের প্রমাণ সঠিক ভাবে জমা দেওয়া হয়েছে। রিভিউ শেষে কিছুক্ষণের মধ্যেই টাকা জমা দেওয়া হবে।'); setTimeout(() => { currentBalance += a; updateBalanceDisplay(); }, 30000); } });
+            document.getElementById('order-new-service-btn')?.addEventListener('click', () => { document.getElementById('smm-history-wrapper').classList.add('d-none'); document.getElementById('smm-order-form-wrapper').classList.remove('d-none'); });
+            document.getElementById('smm-quantity-input')?.addEventListener('input', e => { document.getElementById('smm-charge-input').value = ((parseInt(e.target.value) || 0) * 0.015).toFixed(2); });
+            document.getElementById('smm-order-form')?.addEventListener('submit', e => { e.preventDefault(); alert('Successful'); e.target.reset(); document.getElementById('smm-charge-input').value = '0'; document.getElementById('smm-order-form-wrapper').classList.add('d-none'); document.getElementById('smm-history-wrapper').classList.remove('d-none'); });
+            document.getElementById('withdrawForm')?.addEventListener('submit', e => { e.preventDefault(); const a = parseFloat(document.getElementById('withdrawAmount').value); if (!a || a < 1) { alert('সঠিক পরিমাণ লিখুন (সর্বনিম্ন $1)।'); return; } if (a > currentBalance) { alert('অপর্যাপ্ত ব্যালেন্স।'); return; } currentBalance -= a; updateBalanceDisplay(); alert(`$${a.toFixed(2)} উত্তোলনের রিকুয়েস্ট সফল হয়েছে!`); modals.withdrawModal.hide(); });
+            document.getElementById('balance-transfer-form')?.addEventListener('submit', e => { e.preventDefault(); const a = parseFloat(document.getElementById('transfer-amount').value); if (!a || a <= 0 || a > currentBalance) { alert('অপর্যাপ্ত ব্যালেন্স বা ভুল পরিমাণ।'); return; } currentBalance -= a; updateBalanceDisplay(); alert(`$${a.toFixed(2)} সফলভাবে ট্রান্সফার হয়েছে!`); e.target.reset(); });
+            document.getElementById('spin-btn')?.addEventListener('click', function() { this.disabled = true; const wheel = document.getElementById('spin-wheel'); const randomDegree = Math.floor(Math.random() * 360) + 3600; wheel.style.transform = `rotate(${randomDegree}deg)`; setTimeout(() => { const prize = spinPrizes[Math.floor((randomDegree % 360) / 45)]; alert(prize.value > 0 ? `Congratulations! You won $${prize.value.toFixed(3)}` : 'Better luck next time!'); if (prize.value > 0) { currentBalance += prize.value; updateBalanceDisplay(); } this.disabled = false; }, 4500); });
+            document.getElementById('create-ad-form')?.addEventListener('submit', e => { e.preventDefault(); alert('Advertisement created successfully!'); e.target.reset(); });
+            document.getElementById('copy-referral-link')?.addEventListener('click', () => { navigator.clipboard.writeText(document.getElementById('referral-link').value).then(() => alert('Referral link copied!')); });
+
+            // --- INITIALIZATION ---
+            displayJobs(sampleJobs);
+            populateSmmModal('smm-category-list', ['YouTube', 'Facebook', 'Instagram', 'Others'], 'smm-category-input', modals.smmCategoryModal);
+            populateSmmModal('smm-service-list', smmServices, 'smm-service-input', modals.smmServiceModal);
+            const wheel = document.getElementById('spin-wheel'); if(wheel) spinPrizes.forEach((prize, i) => { const section = document.createElement('div'); section.className = 'spin-section'; section.style.transform = `rotate(${i * 45}deg)`; section.innerHTML = `<span>${prize.label}</span>`; wheel.appendChild(section); });
+            updateBalanceDisplay();
+        });
+    </script>
+</body>
+</html>
