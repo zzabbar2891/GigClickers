@@ -2,70 +2,70 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GigClickers - Ultimate All-in-One Platform</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        html, body { height: 100%; }
+        html, body { height: 100%; overflow-x: hidden; }
         body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; }
-        .main-container { flex: 1; padding-top: 20px; }
-        .navbar { background-color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,.1); }
-        .navbar-brand { font-weight: bold; color: #28a745 !important; }
-        .card, .job-card { background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .job-card { padding: 20px; transition: transform .2s, box-shadow .2s; }
+        .main-container { flex: 1; padding-top: 10px; }
+        .navbar { background-color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,.1); padding: 0.5rem 0; }
+        .navbar-brand { font-weight: bold; color: #28a745 !important; font-size: 1.2rem; }
+        .card, .job-card { background-color: #fff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .job-card { padding: 15px; transition: transform .2s, box-shadow .2s; }
         .job-card:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
         .job-card-header { display: flex; align-items: center; width: 100%; }
-        .job-icon { font-size: 2rem; margin-right: 20px; width: 50px; text-align: center; }
+        .job-icon { font-size: 1.5rem; margin-right: 12px; width: 40px; text-align: center; }
         .job-details { flex-grow: 1; }
-        .job-title { font-weight: 600; color: #333; margin-bottom: 5px; }
-        .job-payment { font-size: 1.2rem; font-weight: bold; color: #28a745; }
-        .job-progress { font-size: 0.85rem; color: #6c757d; }
-        .balance-card { background: linear-gradient(45deg, #28a745, #20c997); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .job-title { font-weight: 600; color: #333; margin-bottom: 3px; font-size: 1rem; }
+        .job-payment { font-size: 1rem; font-weight: bold; color: #28a745; }
+        .job-progress { font-size: 0.8rem; color: #6c757d; }
+        .balance-card { background: linear-gradient(45deg, #28a745, #20c997); color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
         .modal-header, .modal-footer { border: none; }
         .form-control:focus { box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); border-color: #86b7fe; }
-        .sidebar-nav .nav-link { color: #333; padding: 12px 15px; display: flex; align-items: center; border-radius: 8px; font-weight: 500; cursor: pointer; }
+        .sidebar-nav .nav-link { color: #333; padding: 10px 12px; display: flex; align-items: center; border-radius: 8px; font-weight: 500; cursor: pointer; font-size: 0.95rem; }
         .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active { background-color: #e9ecef; color: #0d6efd; }
-        .sidebar-nav .nav-link i.fa-fw { width: 25px; text-align: center; font-size: 1.1rem; }
-        .offcanvas-header { border-bottom: 1px solid #dee2e6; }
-        .offcanvas-title { font-weight: bold; color: #28a745; }
-        #categoryGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
-        .category-tag { background-color: #f1f1f1; border: 1px solid #ddd; border-radius: 20px; padding: 8px 12px; text-align: center; cursor: pointer; font-size: 0.9rem; }
+        .sidebar-nav .nav-link i.fa-fw { width: 20px; text-align: center; font-size: 1rem; }
+        .offcanvas-header { border-bottom: 1px solid #dee2e6; padding: 1rem; }
+        .offcanvas-title { font-weight: bold; color: #28a745; font-size: 1.3rem; }
+        #categoryGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
+        .category-tag { background-color: #f1f1f1; border: 1px solid #ddd; border-radius: 20px; padding: 6px 10px; text-align: center; cursor: pointer; font-size: 0.85rem; }
         .category-tag.active { background-color: #28a745; color: white; border-color: #28a745; }
         .form-control-selector { cursor: pointer; background-color: #fff !important; }
         
-        #spin-container { text-align: center; padding: 30px; }
-        #spin-wheel-wrapper { position: relative; width: 280px; height: 280px; margin: 20px auto; }
-        #spin-wheel { position: relative; width: 100%; height: 100%; border-radius: 50%; border: 5px solid #333; background-image: conic-gradient(red 0% 45%, gold 45% 90%, deepskyblue 90% 135%, limegreen 135% 180%, orange 180% 225%, darkviolet 225% 270%, cyan 270% 315%, hotpink 315% 360%); transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1); }
+        #spin-container { text-align: center; padding: 20px; }
+        #spin-wheel-wrapper { position: relative; width: 100%; max-width: 280px; height: auto; margin: 15px auto; aspect-ratio: 1/1; }
+        #spin-wheel { position: relative; width: 100%; height: 100%; border-radius: 50%; border: 4px solid #333; background-image: conic-gradient(red 0% 45%, gold 45% 90%, deepskyblue 90% 135%, limegreen 135% 180%, orange 180% 225%, darkviolet 225% 270%, cyan 270% 315%, hotpink 315% 360%); transition: transform 4s cubic-bezier(0.25, 1, 0.5, 1); }
         .spin-section { position: absolute; width: 50%; height: 50%; background: transparent; transform-origin: 100% 100%; left: 0; top: 0; display: flex; justify-content: center; align-items: flex-start; padding-top: 15px; }
-        .spin-section span { color: white; font-weight: bold; text-shadow: 1px 1px 2px black; font-size: 0.9rem; transform: rotate(-45deg); display: block; }
-        #spin-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 30px solid #333; z-index: 10; }
-        #spin-btn { margin-top: 30px; font-size: 1.5rem; padding: 10px 40px; }
+        .spin-section span { color: white; font-weight: bold; text-shadow: 1px 1px 2px black; font-size: 0.8rem; transform: rotate(-45deg); display: block; }
+        #spin-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid #333; z-index: 10; }
+        #spin-btn { margin-top: 20px; font-size: 1.2rem; padding: 8px 30px; }
 
-        .site-footer { background-color: #e0f2e9; color: #333; padding: 40px 0; }
-        .footer-logo { font-size: 1.8rem; font-weight: bold; color: #28a745; margin-bottom: 20px; }
-        .footer-heading { font-weight: bold; margin-bottom: 15px; }
+        .site-footer { background-color: #e0f2e9; color: #333; padding: 30px 0; }
+        .footer-logo { font-size: 1.5rem; font-weight: bold; color: #28a745; margin-bottom: 15px; }
+        .footer-heading { font-weight: bold; margin-bottom: 12px; font-size: 1.1rem; }
         .footer-links { list-style: none; padding-left: 0; }
-        .footer-links li { margin-bottom: 10px; }
-        .footer-links a { color: #555; text-decoration: none; }
+        .footer-links li { margin-bottom: 8px; }
+        .footer-links a { color: #555; text-decoration: none; font-size: 0.9rem; }
         .footer-links a:hover { color: #28a745; }
-        .social-icons a { display: inline-flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 8px; color: white; margin-right: 10px; text-decoration: none; font-size: 1.2rem; }
+        .social-icons a { display: inline-flex; justify-content: center; align-items: center; width: 36px; height: 36px; border-radius: 8px; color: white; margin-right: 8px; text-decoration: none; font-size: 1.1rem; }
         .social-icons .facebook { background-color: #1877f2; }
         .social-icons .twitter { background-color: #1da1f2; }
         .social-icons .linkedin { background-color: #0077b5; }
-        .footer-copyright { border-top: 1px solid #cce2d6; margin-top: 30px; padding-top: 20px; text-align: center; font-size: 0.9rem; }
+        .footer-copyright { border-top: 1px solid #cce2d6; margin-top: 25px; padding-top: 15px; text-align: center; font-size: 0.85rem; }
 
         /* --- Payment Proof & Top Freelancer Styles --- */
         .payment-proofs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
         }
         .proof-card {
             background: #fff;
             border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 10px;
+            padding: 12px;
             display: flex;
             align-items: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -76,12 +76,12 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.08);
         }
         .proof-avatar {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            margin-right: 15px;
+            margin-right: 12px;
             object-fit: cover;
-            border: 3px solid #e0f2e9;
+            border: 2px solid #e0f2e9;
         }
         .proof-details {
             flex-grow: 1;
@@ -89,22 +89,24 @@
         .proof-user {
             font-weight: 600;
             color: #343a40;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
         }
         .proof-amount {
             color: #28a745;
             font-weight: bold;
+            font-size: 0.95rem;
         }
         .proof-meta {
             display: flex;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #6c757d;
         }
         .payment-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
         }
 
         .freelancer-list {
@@ -114,9 +116,9 @@
         .freelancer-item {
             background-color: #ffffff;
             border: 1px solid #e9ecef;
-            border-radius: 12px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             transition: background-color 0.2s ease;
@@ -125,21 +127,21 @@
             background-color: #f8f9fa;
         }
         .freelancer-rank {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: #6c757d;
-            width: 30px;
+            width: 25px;
             text-align: center;
-            margin-right: 15px;
+            margin-right: 12px;
         }
         .freelancer-rank.gold { color: #ffc107; }
         .freelancer-rank.silver { color: #adb5bd; }
         .freelancer-rank.bronze { color: #cd7f32; }
         .freelancer-avatar {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            margin-right: 15px;
+            margin-right: 12px;
             object-fit: cover;
         }
         .freelancer-info {
@@ -147,15 +149,17 @@
         }
         .freelancer-name {
             font-weight: 600;
+            font-size: 0.95rem;
         }
         .freelancer-earned {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #28a745;
         }
         /* Style for auto-generated links in job description */
         .job-description-content a {
             color: #0d6efd;
             text-decoration: underline;
+            font-size: 0.9rem;
         }
         .job-description-content a:hover {
             color: #0a58ca;
@@ -163,22 +167,22 @@
         
         /* Ad container styles */
         .ad-container {
-            margin: 15px auto;
+            margin: 12px auto;
             text-align: center;
             background-color: #fff;
-            padding: 10px;
+            padding: 8px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .ad-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #6c757d;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
         .back-button-container {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 15px;
+            right: 15px;
             z-index: 1000;
         }
         .exit-overlay {
@@ -196,11 +200,119 @@
         }
         .exit-modal {
             background-color: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
             text-align: center;
-            max-width: 500px;
-            width: 90%;
+            max-width: 90%;
+            width: 100%;
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 767px) {
+            .main-container { padding-top: 10px; }
+            .navbar { padding: 0.4rem 0; }
+            .navbar-brand { font-size: 1.1rem; }
+            #userBalance { font-size: 0.85rem; }
+            .job-card-header { flex-wrap: wrap; }
+            .job-details { min-width: 60%; }
+            .job-payment-container { width: 100%; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; }
+            .job-payment, .job-progress { display: inline-block; margin-right: 15px; }
+            .balance-card { padding: 12px; }
+            .balance-card h4 { font-size: 1.1rem; }
+            .balance-card h1 { font-size: 1.8rem; }
+            .balance-card .btn { padding: 0.3rem 0.8rem; font-size: 0.9rem; }
+            .filter-section .btn { padding: 0.4rem 0.8rem; font-size: 0.9rem; margin-bottom: 10px; }
+            .sidebar-nav .nav-link { padding: 8px 10px; font-size: 0.9rem; }
+            .offcanvas-body { padding: 10px; }
+            .footer-heading { font-size: 1rem; }
+            .footer-links a { font-size: 0.85rem; }
+            .social-icons a { width: 32px; height: 32px; font-size: 1rem; }
+            .payment-proofs-grid { grid-template-columns: 1fr; }
+            .proof-card { padding: 10px; }
+            .proof-user, .proof-amount { font-size: 0.9rem; }
+            .freelancer-name, .freelancer-earned { font-size: 0.9rem; }
+            .modal-body { padding: 15px; }
+            .modal-header { padding: 15px; }
+            .modal-title { font-size: 1.2rem; }
+            .form-control { padding: 0.4rem 0.75rem; font-size: 0.9rem; }
+            .btn { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+            .offcanvas-title { font-size: 1.2rem; }
+            .job-description-content { font-size: 0.9rem; }
+            .card-body { padding: 1rem; }
+            .main-view h4 { font-size: 1.3rem; }
+        }
+        
+        @media (max-width: 576px) {
+            .navbar-brand { font-size: 1rem; }
+            #userBalance { font-size: 0.8rem; margin-right: 8px; }
+            .job-icon { font-size: 1.3rem; margin-right: 8px; width: 35px; }
+            .job-title { font-size: 0.95rem; }
+            .job-payment { font-size: 0.95rem; }
+            .job-progress { font-size: 0.75rem; }
+            .balance-card h1 { font-size: 1.6rem; }
+            .balance-card .btn { font-size: 0.85rem; padding: 0.25rem 0.6rem; }
+            .filter-section { flex-direction: column; align-items: stretch; }
+            .filter-section .btn { width: 100%; margin-bottom: 8px; }
+            .footer-logo { font-size: 1.3rem; }
+            .footer-heading { font-size: 0.95rem; }
+            .social-icons a { width: 30px; height: 30px; }
+            .proof-card { flex-direction: column; align-items: flex-start; }
+            .proof-avatar { margin-bottom: 8px; }
+            .freelancer-item { padding: 8px 10px; }
+            .freelancer-rank { font-size: 1rem; width: 22px; }
+            .freelancer-avatar { width: 35px; height: 35px; }
+            .modal-title { font-size: 1.1rem; }
+            .form-control { font-size: 0.85rem; }
+            .btn { font-size: 0.85rem; }
+            .job-description-content { font-size: 0.85rem; }
+            .card-body { padding: 0.8rem; }
+            .main-view h4 { font-size: 1.2rem; }
+        }
+        
+        /* Job card mobile layout */
+        .job-card-header-mobile {
+            display: none;
+        }
+        
+        @media (max-width: 767px) {
+            .job-card-header-desktop {
+                display: none;
+            }
+            .job-card-header-mobile {
+                display: block;
+            }
+            .job-card-header-row {
+                display: flex;
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            .job-icon-mobile {
+                font-size: 1.3rem;
+                width: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .job-title-mobile {
+                font-weight: 600;
+                color: #333;
+                font-size: 0.95rem;
+                flex-grow: 1;
+            }
+            .payment-info-mobile {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 8px;
+            }
+            .action-buttons-mobile {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+            .action-buttons-mobile .btn {
+                flex: 1;
+                margin: 0 4px;
+            }
         }
     </style>
 </head>
@@ -400,8 +512,8 @@
     <div class="modal fade" id="categoryModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Select Job Category</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div id="categoryGrid"></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-secondary" id="clearCategories">Clear</button><button type="button" class="btn btn-primary" id="applyCategories">Apply</button></div></div></div></div>
     <div class="modal fade" id="applyJobModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5>কাজের প্রমাণ জমা দিন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><h6 id="jobToApplyTitle" class="mb-3"></h6><p>অনুগ্রহ করে কাজের প্রমাণ হিসেবে স্ক্রিনশট লিংক দিন।</p><form id="proofSubmissionForm"><div class="mb-3"><label class="form-label">স্ক্রিনশট লিংক ১ (আবশ্যক)</label><input type="url" class="form-control" id="proofLink1" required></div><div class="mb-3"><label class="form-label">স্ক্রিনশট লিংক ২ (ঐচ্ছিক)</label><input type="url" class="form-control" id="proofLink2"></div><div class="mb-3"><label class="form-label">স্ক্রিনশট লিংক ৩ (ঐচ্ছিক)</label><input type="url" class="form-control" id="proofLink3"></div><input type="hidden" id="jobToApplyId"><button type="submit" class="btn btn-success w-100">Submit</button></form></div></div></div></div>
     <div class="modal fade" id="postJobModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">নতুন জব পোস্ট করুন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="jobPostForm"><div class="mb-3"><label class="form-label">জবের টাইটেল</label><input type="text" class="form-control" id="jobTitleInput" required></div><div class="mb-3"><label class="form-label">কাজের বিস্তারিত বিবরণ</label><textarea class="form-control" id="jobDescriptionInput" rows="4" required></textarea></div><div class="mb-3"><label class="form-label">প্রতি কাজের জন্য পেমেন্ট (USD)</label><input type="number" class="form-control" id="jobPaymentInput" step="0.001" min="0.001" required></div><div class="mb-3"><label class="form-label">কতজন কাজ করতে পারবে?</label><input type="number" class="form-control" id="jobQuantityInput" min="1" required></div><button type="submit" class="btn btn-primary w-100">জব পোস্ট করুন</button></form></div></div></div></div>
-    <div class="modal fade" id="depositModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">ডিপোজিট করুন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p><strong>বিকাশ/নগদ/রকেট নম্বর:</strong> 01965991420</p><hr><form><div class="mb-3"><label class="form-label">টাকার পরিমাণ (BDT)</label><input type="number" class="form-control" id="depositAmount" required></div><div class="mb-3"><label class="form-label">ট্রানজেকশন আইডি</label><input type="text" class="form-control" id="transactionId" required></div><button type="button" class="btn btn-primary w-100" onclick="alert('আপনার ডিপোজিট রিকুয়েস্ট পাঠানো হয়েছে।')">সাবমিট</button></form></div></div></div></div>
-    <div class="modal fade" id="withdrawModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">টাকা উত্তোলন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p>আপনার বর্তমান ব্যালেন্স: <strong id="withdrawBalanceDisplay">$0.000</strong></p><p class="text-muted"><small>সর্বনিম্ন $2 উত্তোলন করা যাবে।</small></p><form id="withdrawForm"><div class="mb-3"><label class="form-label">পেমেন্ট মেথড</label><div><input type="radio" class="btn-check" name="paymentMethod" id="bkash" autocomplete="off" checked><label class="btn btn-outline-danger" for="bkash">বিকাশ</label><input type="radio" class="btn-check" name="paymentMethod" id="rocket" autocomplete="off"><label class="btn btn-outline-warning" for="rocket">রকেট</label><input type="radio" class="btn-check" name="paymentMethod" id="nagad" autocomplete="off"><label class="btn btn-outline-primary" for="nagad">নগদ</label></div></div><div class="mb-3"><label class="form-label">টাকার পরিমাণ (USD)</label><input type="number" class="form-control" id="withdrawAmount" step="0.01" min="1" required></div><div class="mb-3"><label class="form-label">একাউন্ট নম্বর</label><input type="text" class="form-control" id="accountNumber" required></div><button type="submit" class="btn btn-primary w-100">উইথড্র রিকুয়েস্ট</button></form></div></div></div></div>
+    <div class="modal fade" id="depositModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">ডিপোজিট করুন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p><strong>বিকাশ/নগদ/রকেট নম্বর:</strong> 01965991420</p><hr><form><div class="mb-3"><label for="depositAmount" class="form-label">টাকার পরিমাণ (BDT)</label><input type="number" id="depositAmount" class="form-control" required></div><div class="mb-3"><label for="transactionId" class="form-label">ট্রানজেকশন আইডি</label><input type="text" id="transactionId" class="form-control" required></div><button type="button" class="btn btn-primary w-100" onclick="alert('আপনার ডিপোজিট রিকুয়েস্ট পাঠানো হয়েছে।')">সাবমিট</button></form></div></div></div></div>
+    <div class="modal fade" id="withdrawModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">টাকা উত্তোলন</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><p>আপনার বর্তমান ব্যালেন্স: <strong id="withdrawBalanceDisplay">$0.000</strong></p><p class="text-muted"><small>সর্বনিম্ন $2 উত্তোলন করা যাবে।</small></p><form id="withdrawForm"><div class="mb-3"><label class="form-label">পেমেন্ট মেথড</label><div><input type="radio" class="btn-check" name="paymentMethod" id="bkash" autocomplete="off" checked><label class="btn btn-outline-danger" for="bkash">বিকাশ</label><input type="radio" class="btn-check" name="paymentMethod" id="rocket" autocomplete="off"><label class="btn btn-outline-warning" for="rocket">রকেট</label><input type="radio" class="btn-check" name="paymentMethod" id="nagad" autocomplete="off"><label class="btn btn-outline-primary" for="nagad">নগদ</label></div></div><div class="mb-3"><label for="withdrawAmount" class="form-label">টাকার পরিমাণ (USD)</label><input type="number" id="withdrawAmount" class="form-control" step="0.01" min="1" required></div><div class="mb-3"><label for="accountNumber" class="form-label">একাউন্ট নম্বর</label><input type="text" id="accountNumber" class="form-control" required></div><button type="submit" class="btn btn-primary w-100">উইথড্র রিকুয়েস্ট</button></form></div></div></div></div>
     <div class="modal fade" id="smmCategoryModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Select Category</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body" id="smm-category-list"></div></div></div></div>
     <div class="modal fade" id="smmServiceModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Select Service</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body" id="smm-service-list"></div></div></div></div>
 
@@ -451,11 +563,11 @@
                 { icon: 'fas fa-user-plus text-success', title: 'Subscribe to a YouTube Channel', price: 0.02, desc: 'নিচের লিংকে ক্লিক করে ইউটিউব চ্যানেলটি খুলুন। "Subscribe" বাটনে ক্লিক করে সাবস্ক্রাইব করুন এবং চ্যানেলের হোম স্ক্রিনে থাকা সাবস্ক্রিপশন স্টেটাসের স্ক্রিনশট দিন。\n🔗 ইউটিউব লিংক: (https://a4z.in/tTmjS)\n', category: 'Sign Up', needed: 450, completed: 401 },
                 { icon: 'fas fa-tasks text-secondary', title: 'Give a 5 Star Rating', price: 0.05, desc: 'লিংকে গিয়ে অ্যাপ বা প্রোডাক্টে ৫ স্টার দিয়ে একটি পজিটিভ রিভিউ দিন। এরপর রেটিং সম্পন্ন হওয়ার স্ক্রিনের ছবি তুলে প্রমাণ হিসেবে দিন。\n🔗 লিংক: (https://a4z.in/tTmjS)\n', category: 'Others', needed: 150, completed: 130 },
                 { icon: 'fas fa-poll text-success', title: 'ছোট একটি সার্ভে পূরণ করুন', price: 1.100, desc: 'এই লিংকে ক্লিক করে একটি ছোট ফর্ম পূরণ করুন (নাম, বয়স, পছন্দ ইত্যাদি)। ফর্ম সফলভাবে সাবমিট হওয়ার পর “Thank You” স্ক্রিনের একটি স্ক্রিনশট দিন。\n🔗 সার্ভে লিংক: (https://a4z.in/tTmjS)\n', category: 'Survey', needed: 100, completed: 1 },
-                { icon: 'fas fa-share-alt text-info', title: 'পোস্ট শেয়ার করুন', price: 0.2, desc: 'প্রথমে লিংকে ক্লিক করে একটি ফেসবুক/ব্লগ পোস্ট খুলুন। তারপর সেটি নিজের প্রোফাইলে পাবলিকভাবে শেয়ার করুন। শেয়ার করা পোস্টের স্ক্রিনশট প্রমাণ হিসেবে দিন。\n🔗 পোস্ট লিংক: (https://a4z.in/tTmjS)\n', category: 'Share', needed: 75, completed: 15 },
-                { icon: 'fas fa-mouse-pointer text-primary', title: 'ওয়েবসাইট ভিজিট করুন (৩০ সেকেন্ড)', price: 0.12, desc: 'এই লিংকে ক্লিক করে একটি ওয়েবসাইটে প্রবেশ করুন। সেখানে অন্তত ৩০ সেকেন্ড অবস্থান করুন ও কিছু অংশ স্ক্রল করুন। এরপর হোমপেজের একটি স্ক্রিনশট দিন。\n🔗 ওয়েবসাইট লিংক: (https://a4z.in/tTmjS)\n', category: 'Website', needed: 300, completed: 25 },
-                { icon: 'fas fa-user-plus text-success', title: 'নতুন ওয়েবসাইটে সাইন আপ করুন', price: 0.80, desc: 'আপনার ইমেইল ব্যবহার করে ওয়েবসাইটে একটি নতুন একাউন্ট তৈরি করুন এবং ইমেইল ভেরিফাই করুন।লিংকে ক্লিক করে ওয়েবসাইটে যান ও একটি নতুন একাউন্ট খুলুন। সফল সাইনআপের পর যে কনফার্মেশন মেসেজ দেখা যাবে তার স্ক্রিনশট দিন。\n🔗 সাইন আপ লিংক: (https://a4z.in/tTmjS)\n', category: 'Sign Up', needed: 100, completed: 10 },
-                { icon: 'fas fa-tasks text-info', title: 'সহজ টাস্ক পূরণ করুন', price: 0.020, desc: 'লিংকে ক্লিক করে একটি সহজ টাস্ক করুন (যেমন: কোনো তথ্য নির্বাচন, বাটন প্রেস ইত্যাদি)। কাজ শেষ হলে একটি কনফার্মেশন স্ক্রিন আসবে, সেটির স্ক্রিনশট দিন。\n🔗 টাস্ক লিংক: (https://a4z.in/tTmjS)\n', category: 'Others', needed: 250, completed: 200 },
-                { icon: 'fas fa-ad text-danger', title: 'বিজ্ঞাপনে ক্লিক এবং ভিজিট', price: 0.25, desc: 'এই লিংকে ক্লিক করে ওয়েবসাইটে প্রবেশ করুন। পেইজে থাকা যেকোনো একটি বিজ্ঞাপন ব্যানারে ক্লিক করুন। নতুন যে পেইজ আসবে, তার স্ক্রিনশট প্রমাণ হিসাবে দিন。\n🔗 লিংক: (https://a4z.in/tTmjS)\n', category: 'Ads Click', needed: 400, completed: 150 },
+                { icon: 'fas fa-share-alt text-info', title: 'পোস্ট শেয়ার করুন', price: 0.2, desc: 'প্রথমে লিংকে ক্লিক করে একটি ফেসবুক/ব্লগ পোস্ট খুলুন। তারপর সেটি নিজের প্রোফাইলে পাবলিকভাবে শেয়ার করুন। শেয়ার করা পোস্টের স্ক্রিনশট প্রমাণ হিসেবে দিন।\n🔗 পোস্ট লিংক: (https://a4z.in/tTmjS)\n', category: 'Share', needed: 75, completed: 15 },
+                { icon: 'fas fa-mouse-pointer text-primary', title: 'ওয়েবসাইট ভিজিট করুন (৩০ সেকেন্ড)', price: 0.12, desc: 'এই লিংকে ক্লিক করে একটি ওয়েবসাইটে প্রবেশ করুন। সেখানে অন্তত ৩০ সেকেন্ড অবস্থান করুন ও কিছু অংশ স্ক্রল করুন। এরপর হোমপেজের একটি স্ক্রিনশট দিন।\n🔗 ওয়েবসাইট লিংক: (https://a4z.in/tTmjS)\n', category: 'Website', needed: 300, completed: 25 },
+                { icon: 'fas fa-user-plus text-success', title: 'নতুন ওয়েবসাইটে সাইন আপ করুন', price: 0.80, desc: 'আপনার ইমেইল ব্যবহার করে ওয়েবসাইটে একটি নতুন একাউন্ট তৈরি করুন এবং ইমেইল ভেরিফাই করুন।লিংকে ক্লিক করে ওয়েবসাইটে যান ও একটি নতুন একাউন্ট খুলুন। সফল সাইনআপের পর যে কনফার্মেশন মেসেজ দেখা যাবে তার স্ক্রিনশট দিন।\n🔗 সাইন আপ লিংক: (https://a4z.in/tTmjS)\n', category: 'Sign Up', needed: 100, completed: 10 },
+                { icon: 'fas fa-tasks text-info', title: 'সহজ টাস্ক পূরণ করুন', price: 0.020, desc: 'লিংকে ক্লিক করে একটি সহজ টাস্ক করুন (যেমন: কোনো তথ্য নির্বাচন, বাটন প্রেস ইত্যাদি)। কাজ শেষ হলে একটি কনফার্মেশন স্ক্রিন আসবে, সেটির স্ক্রিনশট দিন।\n🔗 টাস্ক লিংক: (https://a4z.in/tTmjS)\n', category: 'Others', needed: 250, completed: 200 },
+                { icon: 'fas fa-ad text-danger', title: 'বিজ্ঞাপনে ক্লিক এবং ভিজিট', price: 0.25, desc: 'এই লিংকে ক্লিক করে ওয়েবসাইটে প্রবেশ করুন। পেইজে থাকা যেকোনো একটি বিজ্ঞাপন ব্যানারে ক্লিক করুন। নতুন যে পেইজ আসবে, তার স্ক্রিনশট প্রমাণ হিসাবে দিন।\n🔗 লিংক: (https://a4z.in/tTmjS)\n', category: 'Ads Click', needed: 400, completed: 150 },
                 { icon: 'fas fa-keyboard text-secondary', title: 'সাধারণ ডাটা এন্ট্রি টাস্ক', price: 0.500, desc: 'নিচের লিংকে ক্লিক করে একটি সহজ ডাটা এন্ট্রি ফর্ম পূরণ করুন (যেমন: নাম, শহর, ফোন নাম্বার)। ফর্ম সফলভাবে সাবমিট হলে স্ক্রিনশট দিন।\n🔗 ফর্ম লিংক: (https://a4z.in/tTmjS)\n', category: 'Others', needed: 10, completed: 2 },
                 { icon: 'fas fa-user-plus text-warning', title: 'নিউজলেটারে সাবস্ক্রাইব করুন', price: 0.18, desc: 'এই লিংকে ক্লিক করে একটি নির্দিষ্ট ব্লগ পোস্ট খুলুন। লেখা স্ক্রল করে পড়ুন এবং নিচের অংশের একটি স্ক্রিনশট তুলুন, যা প্রমাণ করে আপনি পেইজটি পড়েছেন。\n🔗 ব্লগ লিংক: (https://a4z.in/tTmjS)\n', category: 'Sign Up', needed: 500, completed: 455 },
                 { icon: 'fas fa-mouse-pointer text-success', title: 'ব্লগ পোস্ট ভিজিট করুন', price: 0.11, desc: 'এই লিংকে ক্লিক করে একটি নির্দিষ্ট ব্লগ পোস্ট খুলুন। লেখা স্ক্রল করে পড়ুন এবং নিচের অংশের একটি স্ক্রিনশট তুলুন, যা প্রমাণ করে আপনি পেইজটি পড়েছেন।\n🔗 ব্লগ লিংক: (https://a4z.in/tTmjS)\n', category: 'Website', needed: 350, completed: 50 },
@@ -466,31 +578,31 @@
                 { icon: 'fas fa-mouse-pointer text-warning', title: 'প্রোডাক্ট পেজ ভিজিট করুন', price: 1.015, desc: 'এই লিংকে ক্লিক করে KYC পেইজে যান। সেখানে আপনার নাম, ঠিকানা ও NID/ড্রাইভিং লাইসেন্স-এর ছবি আপলোড করে ফর্ম পূরণ করুন। “KYC submitted” কনফার্মেশন স্ক্রিনশট দিন।\n 🔗 KYC লিংক: https://a4z.in/tTmjS', category: 'Website', needed: 250, completed: 110 },
                 { icon: 'fas fa-user-plus text-danger', title: 'ডকুমেন্ট দিয়ে KYC সাবমিট করুন', price: 0.250, desc: 'এই লিংকে ক্লিক করে KYC পেইজে যান। সেখানে আপনার নাম, ঠিকানা ও NID/ড্রাইভিং লাইসেন্স-এর ছবি আপলোড করে ফর্ম পূরণ করুন। “KYC submitted” কনফার্মেশন স্ক্রিনশট দিন।\n 🔗 KYC লিংক: https://a4z.in/tTmjS', category: 'Kyc Submit', needed: 50, completed: 2 },
                 { icon: 'fas fa-ad text-info', title: 'ওয়েবসাইট ভিজিট ও অ্যাড ক্লিক', price: 0.035, desc: 'নিচের লিংকে ক্লিক করে ওয়েবসাইটটি ওপেন করুন এবং স্ক্রল করে একটি অ্যাড খুঁজে বের করে তাতে ক্লিক করুন। অ্যাড ওপেন হলে স্ক্রিনশট নিন。\n 🔗 লিংক: https://a4z.in/tTmjS', category: 'Ads Click', needed: 180, completed: 44 },
-                { icon: 'fas fa-user-plus text-dark', title: 'একটি অ্যাপে সাইন আপ করুন', price: 0.100, desc: 'এই লিংকে ক্লিক করে একটি অ্যাপ ডাউনলোড করে ইন্সটল করুন। এরপর অ্যাপে সাইন আপ করুন এবং লগইন স্ক্রিনের একটি স্ক্রিনশট দিন。\n 🔗 অ্যাপ লিংক: https://a4z.in/tTmjS', category: 'Sign Up', needed: 120, completed: 90 },
+                { icon: 'fas fa-user-plus text-dark', title: 'একটি অ্যাপে সাইন আপ করুন', price: 0.100, desc: 'এই লিংকে ক্লিক করে একটি অ্যাপ ডাউনলোড করে ইন্সটল করুন। এরপর অ্যাপে সাইন আপ করুন এবং লগইন স্ক্রিনের একটি স্ক্রিনশট দিন।\n 🔗 অ্যাপ লিংক: https://a4z.in/tTmjS', category: 'Sign Up', needed: 120, completed: 90 },
                 { icon: 'fas fa-tasks text-success', title: 'ভিডিও দেখে সহজ প্রশ্নের উত্তর দিন', price: 0.45, desc: 'নিচের লিংকে ক্লিক করে একটি ছোট ভিডিও দেখুন। ভিডিও শেষ হলে একটি প্রশ্ন আসবে—উত্তর দিন। সাবমিট করার পর যে স্ক্রিনটি আসবে তা স্ক্রিনশট হিসেবে দিন।\n 🔗 ভিডিও লিংক: https://a4z.in/tTmjS', category: 'Others', needed: 150, completed: 15 },
                 { icon: 'fas fa-mouse-pointer text-primary', title: 'যেকোনো ১০টি পোস্ট ভিজিট করুন', price: 0.70, desc: 'এই লিংকে ক্লিক করে ওয়েবসাইটে যান এবং সেখানে থাকা যেকোনো ১০টি পোস্ট আলাদাভাবে ওপেন করুন। প্রত্যেকটির ভিজিট স্ক্রিনশট দিন (মোট ১০টি)।\n 🔗 পোস্ট লিংক: https://a4z.in/tTmjS', category: 'Website', needed: 80, completed: 7 },
                 { icon: 'fas fa-ad text-secondary', title: 'পপ-আপ অ্যাডে ক্লিক', price: 0.015, desc: 'ওয়েবসাইট ভিজিট করলে যে পপ-আপ বিজ্ঞাপনটি আসবে, সেটিতে ক্লিক করুন। ওয়েব সাইট লিঙ্ক: https://a4z.in/tTmjS', category: 'Ads Click', needed: 300, completed: 121 },
-                { icon: 'fas fa-user-plus text-info', title: 'জিমেইল দিয়ে সাইন-আপ', price: 0.55, desc: 'লিংকে ক্লিক করে সাইটে যান এবং Gmail Account ব্যবহার করে Google Sign-In এর মাধ্যমে সাইন আপ করুন। সফলভাবে লগইন হওয়ার স্ক্রিনশট দিন。\n 🔗 Gmail Sign Up: https://a4z.in/tTmjS', category: 'Sign Up', needed: 200, completed: 50 },
+                { icon: 'fas fa-user-plus text-info', title: 'জিমেইল দিয়ে সাইন-আপ', price: 0.55, desc: 'লিংকে ক্লিক করে সাইটে যান এবং Gmail Account ব্যবহার করে Google Sign-In এর মাধ্যমে সাইন আপ করুন। সফলভাবে লগইন হওয়ার স্ক্রিনশট দিন।\n 🔗 Gmail Sign Up: https://a4z.in/tTmjS', category: 'Sign Up', needed: 200, completed: 50 },
                 { icon: 'fas fa-tasks text-warning', title: 'ফর্ম পূরণ করুন', price: 0.90, desc: 'এই লিংকে ক্লিক করে একটি ফর্ম খুলুন। নির্দিষ্ট তথ্য (নাম, ইমেইল, অভিমত) পূরণ করুন ও সাবমিট করুন। সফল সাবমিশনের স্ক্রিনশট দিন।\n 🔗 ফর্ম লিংক: https://a4z.in/tTmjS\n', category: 'Survey', needed: 100, completed: 20 },
                 { icon: 'fas fa-mouse-pointer text-info', title: 'Visit Cooking Blog', price: 0.18, desc: 'লিংকে ক্লিক করে একটি কুকিং ব্লগ খুলুন এবং কমপক্ষে ১টি রেসিপি পড়ুন। এরপর রেসিপি পেইজের একটি স্ক্রিনশট দিন, যেখানে পুরো পেইজ দেখা যাবে।\n 🔗 ব্লগ লিংক: https://a4z.in/tTmjS\n', category: 'Website', needed: 400, completed: 350 },
-                { icon: 'fas fa-user-plus text-primary', title: 'Register on Crypto Forum', price: 0.085, desc: 'নিচের লিংকে ক্লিক করে একটি ক্রিপ্টো বিষয়ক ফোরাম খুলুন এবং Sign Up করুন। ইউজারনেম/ইমেইল দিয়ে রেজিস্ট্রেশন করার পর প্রোফাইল পেইজের স্ক্রিনশট দিন。\n 🔗 ফোরাম লিংক: https://a4z.in/tTmjS', category: 'Sign Up', needed: 150, completed: 12 },
-                { icon: 'fas fa-ad text-success', title: 'Click Footer Ad', price: 0.22, desc: 'এই লিংকে ক্লিক করে একটি ওয়েবসাইট খুলুন। সেখানে থাকা ভিডিও অ্যাডটি প্লে করুন এবং এতে ক্লিক করুন। ক্লিকের পর যে পেইজ আসে, তার স্ক্রিনশট দিন。\n 🔗 লিংক: https://a4z.in/tTmjS', category: 'Ads Click', needed: 600, completed: 550 },
+                { icon: 'fas fa-user-plus text-primary', title: 'Register on Crypto Forum', price: 0.085, desc: 'নিচের লিংকে ক্লিক করে একটি ক্রিপ্টো বিষয়ক ফোরাম খুলুন এবং Sign Up করুন। ইউজারনেম/ইমেইল দিয়ে রেজিস্ট্রেশন করার পর প্রোফাইল পেইজের স্ক্রিনশট দিন।\n 🔗 ফোরাম লিংক: https://a4z.in/tTmjS', category: 'Sign Up', needed: 150, completed: 12 },
+                { icon: 'fas fa-ad text-success', title: 'Click Footer Ad', price: 0.22, desc: 'এই লিংকে ক্লিক করে একটি ওয়েবসাইট খুলুন। সেখানে থাকা ভিডিও অ্যাডটি প্লে করুন এবং এতে ক্লিক করুন। ক্লিকের পর যে পেইজ আসে, তার স্ক্রিনশট দিন।\n 🔗 লিংক: https://a4z.in/tTmjS', category: 'Ads Click', needed: 600, completed: 550 },
                 { icon: 'fas fa-poll text-warning', title: 'Answer 3 Quick Poll Questions', price: 0.50, desc: 'Answer 3 simple poll questions on the page. Your opinion matters.website 🔗 https://a4z.in/tTmjS', category: 'Survey', needed: 300, completed: 290 },
                 { icon: 'fas fa-file-image text-dark', title: 'Watch a GIF on a page', price: 0.12, desc: 'Visit the page and watch the full loop of the animated GIF. Website visit link:https://a4z.in/tTmjS', category: 'Website', needed: 1000, completed: 950 },
                 { icon: 'fas fa-user-plus text-secondary', title: 'Create an account on a Photo Site', price: 0.75, desc: 'Create a free account on the photo sharing website link: https://a4z.in/tTmjS.', category: 'Sign Up', needed: 250, completed: 210 },
                 { icon: 'fas fa-video text-danger', title: 'Visit page and click on Video Ad', price: 0.40, desc: 'Visit the page, find a video advertisement and click on it website link:https://a4z.in/tTmjS.', category: 'Ads Click', needed: 350, completed: 311 },
                 { icon: 'fas fa-puzzle-piece text-info', title: 'Install a small browser extension', price: 0.110, desc: 'লিংকে ক্লিক করে একটি ব্রাউজার এক্সটেনশন পেইজ খুলুন। “Add to Chrome”/“Install” বাটনে ক্লিক করে এক্সটেনশনটি ইন্সটল করুন। এরপর ব্রাউজারে ইনস্টল হওয়া স্ক্রিনশট দিন।\n 🔗 Extension লিংক: https://a4z.in/tTmjS', category: 'Others', needed: 100, completed: 87 },
-                { icon: 'fas fa-address-book text-primary', title: 'Visit a "Contact Us" page', price: 0.10, desc: 'নিচের ইনস্ট্রাকশন অনুসারে Google এ একটি নির্দিষ্ট কিওয়ার্ড দিয়ে সার্চ করুন। প্রথম রেজাল্টে ক্লিক করুন এবং যে ওয়েবপেইজ আসবে সেটির স্ক্রিনশট দিন。\n 🔗 সার্চ লিংক/কিওয়ার্ড: https://a4z.in/tTmjS\n', category: 'Website', needed: 1200, completed: 1120 },
-                { icon: 'fas fa-search text-success', title: 'Perform a Google Search and Click Result', price: 0.65, desc: 'নিচের ইনস্ট্রাকশন অনুসারে Google এ একটি নির্দিষ্ট কিওয়ার্ড দিয়ে সার্চ করুন। প্রথম রেজাল্টে ক্লিক করুন এবং যে ওয়েবপেইজ আসবে সেটির স্ক্রিনশট দিন。\n 🔗 সার্চ লিংক/কিওয়ার্ড: https://a4z.in/tTmjS\n', category: 'Others', needed: 200, completed: 180 },
+                { icon: 'fas fa-address-book text-primary', title: 'Visit a "Contact Us" page', price: 0.10, desc: 'নিচের ইনস্ট্রাকশন অনুসারে Google এ একটি নির্দিষ্ট কিওয়ার্ড দিয়ে সার্চ করুন। প্রথম রেজাল্টে ক্লিক করুন এবং যে ওয়েবপেইজ আসবে সেটির স্ক্রিনশট দিন।\n 🔗 সার্চ লিংক/কিওয়ার্ড: https://a4z.in/tTmjS\n', category: 'Website', needed: 1200, completed: 1120 },
+                { icon: 'fas fa-search text-success', title: 'Perform a Google Search and Click Result', price: 0.65, desc: 'নিচের ইনস্ট্রাকশন অনুসারে Google এ একটি নির্দিষ্ট কিওয়ার্ড দিয়ে সার্চ করুন। প্রথম রেজাল্টে ক্লিক করুন এবং যে ওয়েবপেইজ আসবে সেটির স্ক্রিনশট দিন।\n 🔗 সার্চ লিংক/কিওয়ার্ড: https://a4z.in/tTmjS\n', category: 'Others', needed: 200, completed: 180 },
                 
                 // --- NEW 10 JOBS ADDED HERE ---
                 { icon: 'fas fa-user-plus text-success', title: 'Sign up for Cloud Storage', price: 0.95, desc: 'Create a new account on the specified cloud storage service.web link:https://a4z.in/tTmjS', category: 'Sign Up', needed: 180, completed: 25 },
                 { icon: 'fas fa-mouse-pointer text-primary', title: 'Visit Travel Agency Website', price: 0.020, desc: 'Visit the travel agency website and browse any three tour packages.website link:https://a4z.in/tTmjS', category: 'Website', needed: 330, completed: 45 },
-                { icon: 'fas fa-ad text-danger', title: 'Watch a Skippable Video Ad', price: 0.028, desc: 'এই লিংকে ক্লিক করে একটি ভিডিও খুলুন, যেটি শুরুতে একটি স্কিপযোগ্য অ্যাড দেখাবে। অ্যাডটি অন্তত ৫ সেকেন্ড দেখার পর স্কিপ করুন এবং স্ক্রিনশট দিন。\n 🔗 ভিডিও লিংক: https://a4z.in/tTmjS\n', category: 'Ads Click', needed: 550, completed: 102 },
-                { icon: 'fas fa-tasks text-info', title: 'Simple Text Transcription Task', price: 0.060, desc: 'লিংকে ক্লিক করে একটি অডিও/ছবির ভিতরের টেক্সট টাইপ করে দিন। টাইপ শেষে সাবমিট করুন এবং যে কনফার্মেশন মেসেজ আসবে সেটির স্ক্রিনশট দিন。\n 🔗 টাস্ক লিংক: https://a4z.in/tTmjS\n', category: 'Others', needed: 210, completed: 33 },
-                { icon: 'fas fa-user-plus text-warning', title: 'Create Gaming Profile', price: 0.070, desc: 'এই লিংকে ক্লিক করে একটি ওয়েবসাইট ভিজিট করুন। নেটিভ অ্যাড (পোস্টের মাঝে সাজানো অ্যাড) চিহ্নিত করে তাতে ক্লিক করুন। ওপেন হওয়া পেইজের স্ক্রিনশট দিন。\n 🔗 Native Ad লিংক: https://a4z.in/tTmjS\n', category: 'Sign Up', needed: 280, completed: 110 },
+                { icon: 'fas fa-ad text-danger', title: 'Watch a Skippable Video Ad', price: 0.028, desc: 'এই লিংকে ক্লিক করে একটি ভিডিও খুলুন, যেটি শুরুতে একটি স্কিপযোগ্য অ্যাড দেখাবে। অ্যাডটি অন্তত ৫ সেকেন্ড দেখার পর স্কিপ করুন এবং স্ক্রিনশট দিন।\n 🔗 ভিডিও লিংক: https://a4z.in/tTmjS\n', category: 'Ads Click', needed: 550, completed: 102 },
+                { icon: 'fas fa-tasks text-info', title: 'Simple Text Transcription Task', price: 0.060, desc: 'লিংকে ক্লিক করে একটি অডিও/ছবির ভিতরের টেক্সট টাইপ করে দিন। টাইপ শেষে সাবমিট করুন এবং যে কনফার্মেশন মেসেজ আসবে সেটির স্ক্রিনশট দিন।\n 🔗 টাস্ক লিংক: https://a4z.in/tTmjS\n', category: 'Others', needed: 210, completed: 33 },
+                { icon: 'fas fa-user-plus text-warning', title: 'Create Gaming Profile', price: 0.070, desc: 'এই লিংকে ক্লিক করে একটি ওয়েবসাইট ভিজিট করুন। নেটিভ অ্যাড (পোস্টের মাঝে সাজানো অ্যাড) চিহ্নিত করে তাতে ক্লিক করুন। ওপেন হওয়া পেইজের স্ক্রিনশট দিন।\n 🔗 Native Ad লিংক: https://a4z.in/tTmjS\n', category: 'Sign Up', needed: 280, completed: 110 },
                 { icon: 'fas fa-mouse-pointer text-dark', title: 'Visit an "About Us" Page', price: 0.011, desc: 'লিংকে ক্লিক করে একটি প্রোডাক্ট বা সার্ভিস ওয়েবসাইটে যান এবং “Pricing” বা “Plans” পেইজে প্রবেশ করুন। পেইজের স্ক্রিনশট তুলে প্রমাণ হিসাবে দিন।\n 🔗 প্রাইসিং লিংক: https://a4z.in/tTmjS\n', category: 'Website', needed: 900, completed: 850 },
-                { icon: 'fas fa-ad text-success', title: 'Click on a Native Ad', price: 0.038, desc: 'এই লিংকে ক্লিক করে একটি ওয়েবসাইট ভিজিট করুন। নেটিভ অ্যাড (পোস্টের মাঝে সাজানো অ্যাড) চিহ্নিত করে তাতে ক্লিক করুন। ওপেন হওয়া পেইজের স্ক্রিনশট দিন。\n 🔗 Native Ad লিংক: https://a4z.in/tTmjS', category: 'Ads Click', needed: 420, completed: 240 },
+                { icon: 'fas fa-ad text-success', title: 'Click on a Native Ad', price: 0.038, desc: 'এই লিংকে ক্লিক করে একটি ওয়েবসাইট ভিজিট করুন। নেটিভ অ্যাড (পোস্টের মাঝে সাজানো অ্যাড) চিহ্নিত করে তাতে ক্লিক করুন। ওপেন হওয়া পেইজের স্ক্রিনশট দিন।\n 🔗 Native Ad লিংক: https://a4z.in/tTmjS', category: 'Ads Click', needed: 420, completed: 240 },
                 { icon: 'fas fa-tasks text-primary', title: 'Image Sorting Task', price: 0.055, desc: 'Look at 10 images and categorize them as either "Cat" or "Dog" linkhttps://a4z.in/tTmjS.', category: 'Others', needed: 360, completed: 198 },
                 { icon: 'fas fa-user-plus text-danger', title: 'Join a Discord Server', price: 0.030, desc: 'Use the invite link to join the Discord server.website link:https://a4z.in/tTmjS', category: 'Sign Up', needed: 500, completed: 450 },
                 { icon: 'fas fa-mouse-pointer text-info', title: 'Visit a Pricing Page', price: 0.015, desc: 'Visit the website’s pricing page and view the different subscription planswebsite link:https://a4z.in/tTmjS.', category: 'Website', needed: 700, completed: 620 }
@@ -520,8 +632,63 @@
             
             const createJobCard = (job) => {
                 const linkifiedDesc = linkify(job.desc);
-                // *** FIX: The apply button now correctly calls the globally available window.applyForJob function ***
-                return `<div class="job-card" data-category="${job.category}"><div class="job-card-header"><div class="job-icon ${job.icon.split(' ')[2]}"><i class="${job.icon.split(' ')[0]} ${job.icon.split(' ')[1]}"></i></div><div class="job-details"><h5 class="job-title">${job.title}</h5></div><div class="text-end ms-3"><div class="job-payment">$${job.price.toFixed(3)}</div><div class="job-progress mt-1">সম্পন্ন করেছেন: <b>${job.completed} / ${job.needed}</b></div><div class="mt-2"><button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#job-desc-${job.id}">বিবরণ</button><button class="btn btn-sm btn-success ms-2" onclick="window.applyForJob('${job.id}')" ${job.completed >= job.needed ? 'disabled' : ''}>Apply</button></div></div></div><div class="collapse" id="job-desc-${job.id}"><div class="p-3 mt-3 bg-light rounded"><strong>বিবরণ:</strong><p class="mb-0 mt-2 job-description-content">${linkifiedDesc}</p></div></div></div>`;
+                // Mobile-optimized job card structure
+                const mobileCard = `
+                    <div class="job-card" data-category="${job.category}">
+                        <div class="job-card-header-mobile">
+                            <div class="job-card-header-row">
+                                <div class="job-icon-mobile ${job.icon.split(' ')[2]}">
+                                    <i class="${job.icon.split(' ')[0]} ${job.icon.split(' ')[1]}"></i>
+                                </div>
+                                <div class="job-title-mobile">${job.title}</div>
+                            </div>
+                            <div class="payment-info-mobile">
+                                <div class="job-payment">$${job.price.toFixed(3)}</div>
+                                <div class="job-progress">${job.completed} / ${job.needed}</div>
+                            </div>
+                            <div class="action-buttons-mobile">
+                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#job-desc-${job.id}">বিবরণ</button>
+                                <button class="btn btn-sm btn-success" onclick="window.applyForJob('${job.id}')" ${job.completed >= job.needed ? 'disabled' : ''}>Apply</button>
+                            </div>
+                        </div>
+                        <div class="collapse" id="job-desc-${job.id}">
+                            <div class="p-3 mt-3 bg-light rounded">
+                                <strong>বিবরণ:</strong>
+                                <p class="mb-0 mt-2 job-description-content">${linkifiedDesc}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Desktop job card structure
+                const desktopCard = `
+                    <div class="job-card" data-category="${job.category}">
+                        <div class="job-card-header job-card-header-desktop">
+                            <div class="job-icon ${job.icon.split(' ')[2]}">
+                                <i class="${job.icon.split(' ')[0]} ${job.icon.split(' ')[1]}"></i>
+                            </div>
+                            <div class="job-details">
+                                <h5 class="job-title">${job.title}</h5>
+                            </div>
+                            <div class="text-end ms-3">
+                                <div class="job-payment">$${job.price.toFixed(3)}</div>
+                                <div class="job-progress mt-1">সম্পন্ন করেছেন: <b>${job.completed} / ${job.needed}</b></div>
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#job-desc-${job.id}">বিবরণ</button>
+                                    <button class="btn btn-sm btn-success ms-2" onclick="window.applyForJob('${job.id}')" ${job.completed >= job.needed ? 'disabled' : ''}>Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse" id="job-desc-${job.id}">
+                            <div class="p-3 mt-3 bg-light rounded">
+                                <strong>বিবরণ:</strong>
+                                <p class="mb-0 mt-2 job-description-content">${linkifiedDesc}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                return desktopCard + mobileCard;
             };
 
             const displayJobs = (jobsToDisplay) => { const c = document.getElementById('jobListings'); if(c) c.innerHTML = jobsToDisplay.length ? jobsToDisplay.map(createJobCard).join('') : `<div class="alert alert-warning text-center">No jobs found.</div>`; };
